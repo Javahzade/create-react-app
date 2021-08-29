@@ -1,5 +1,6 @@
 import { Component, Fragment } from 'react';
 import './App.css';
+import First from './pages/first';
 
 export default class App extends Component {
   constructor(props){
@@ -64,6 +65,7 @@ export default class App extends Component {
           <button onClick={this.decrement}>Decrement</button>
           <button onClick={this.onReset}>Reset</button>
         </div>
+        <First title='First' />
       </div>
     )
   }
