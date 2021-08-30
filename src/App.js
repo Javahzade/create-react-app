@@ -1,4 +1,4 @@
-import { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import './App.css';
 import Home from './pages/home';
 import {
@@ -9,6 +9,13 @@ import {
 } from "react-router-dom";
 import Contact from './pages/contact';
 import About from './pages/about';
+
+const themes = {
+  light: "#eeeeee",
+  dark: "#222222",
+};
+
+export const ThemeContext = React.createContext(themes.light);
 
 export default class App extends Component {
   constructor(props){
@@ -64,43 +71,44 @@ export default class App extends Component {
   render(){
     console.log('render')
     return(
-      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }}>
-        <h1>Example</h1>
-        <h2>Counter: {this.state.counter}</h2>
-        {this.state.counter === 5 ? <h2>Max counter must be 5!</h2> : <Fragment />}
-        <div style={{display: 'flex'}}>
-          <button disabled={this.state.counter === 5} onClick={this.increment}>Increment</button>
-          <button onClick={this.decrement}>Decrement</button>
-          <button onClick={this.onReset}>Reset</button>
+      <ThemeContext.Provider value={themes.dark}>
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }}>
+          <h1>Example</h1>
+          <h2>Counter: {this.state.counter}</h2>
+          {this.state.counter === 5 ? <h2>Max counter must be 5!</h2> : <Fragment />}
+          <div style={{display: 'flex'}}>
+            <button disabled={this.state.counter === 5} onClick={this.increment}>Increment</button>
+            <button onClick={this.decrement}>Decrement</button>
+            <button onClick={this.onReset}>Reset</button>
+          </div>
+          <Router>
+            <nav>
+              <ul>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/about">About</Link>
+                </li>
+                <li>
+                  <Link to="/contact">Users</Link>
+                </li>
+              </ul>
+            </nav>
+            <Switch>
+              <Route exact path="/">
+                <Home title='Home' />
+              </Route>
+              <Route path="/contact">
+                <Contact title='Contact' />
+              </Route>
+              <Route path="/about">
+                <About title='About' />
+              </Route>
+            </Switch>
+          </Router>
         </div>
-        <Router>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-              <li>
-                <Link to="/contact">Users</Link>
-              </li>
-            </ul>
-          </nav>
-          <Switch>
-            <Route exact path="/">
-              <Home title='Home' />
-            </Route>
-            <Route path="/contact">
-              <Contact title='Contact' />
-            </Route>
-            <Route path="/about">
-              <About title='About' />
-            </Route>
-
-          </Switch>
-        </Router>
-      </div>
+      </ThemeContext.Provider>
     )
   }
 }
