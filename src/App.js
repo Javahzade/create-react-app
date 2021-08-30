@@ -1,6 +1,14 @@
 import { Component, Fragment } from 'react';
 import './App.css';
-import First from './pages/first';
+import Home from './pages/home';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Contact from './pages/contact';
+import About from './pages/about';
 
 export default class App extends Component {
   constructor(props){
@@ -65,7 +73,33 @@ export default class App extends Component {
           <button onClick={this.decrement}>Decrement</button>
           <button onClick={this.onReset}>Reset</button>
         </div>
-        <First title='First' />
+        <Router>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/about">About</Link>
+              </li>
+              <li>
+                <Link to="/contact">Users</Link>
+              </li>
+            </ul>
+          </nav>
+          <Switch>
+            <Route exact path="/">
+              <Home title='Home' />
+            </Route>
+            <Route path="/contact">
+              <Contact title='Contact' />
+            </Route>
+            <Route path="/about">
+              <About title='About' />
+            </Route>
+
+          </Switch>
+        </Router>
       </div>
     )
   }
