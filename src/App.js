@@ -23,32 +23,39 @@ export default class App extends Component {
     this.state = {
       counter: 0,
     }
-    console.log('constructor props =>', props);
   }
 
   static getDerivedStateFromProps(props, state){
-    console.log('getDerivedStateFromProps props =>', props);
-    console.log('getDerivedStateFromProps state =>', state);
     return null;
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState){
-    console.log('getSnapshotBeforeUpdate prevProps =>', prevProps);
-    console.log('getSnapshotBeforeUpdate prevState =>', prevState);
     return null;
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
-    console.log('componentDidUpdate prevProps =>', prevProps);
-    console.log('componentDidUpdate prevState =>', prevState);
-    console.log('componentDidUpdate snapshot =>', snapshot);
+  }
+
+  request = async() => {
+    const response = await fetch('http://192.168.88.45/xbitbucket/xtimesheet/public/login', {
+      mode: 'no-cors',
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify({
+        name: 'elmar',
+        password: '123456'
+      })
+    }).then(res => res.json()).catch(e => console.log('request error ===>',e))
+
+    console.log('request result ===>', response)
   }
   componentDidMount(){
-    console.log('componentDidMount');
+    this.request()
   }
   shouldComponentUpdate(nextProps, nextState){
-    console.log('shouldComponentUpdate nextProps =>', nextProps);
-    console.log('shouldComponentUpdate nextState =>', nextState);
     return true;
   }
 
@@ -69,7 +76,6 @@ export default class App extends Component {
   }
 
   render(){
-    console.log('render')
     return(
       <ThemeContext.Provider value={themes.dark}>
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }}>

@@ -5,7 +5,6 @@ import './pages.css';
 
 function Home (props){
     const theme = useContext(ThemeContext)
-    console.log('Home ~ theme', theme)
     return(
         <div className="home" style={{backgroundColor: theme}}>
             <h2>
